@@ -80,7 +80,7 @@ def select_role():
                             if qty_to_buy <= fruit_stock[fruit_name]['qty']:
                                 total_cost = qty_to_buy * fruit_stock[fruit_name]['price']
                                 fruit_stock[fruit_name]['qty'] -= qty_to_buy
-                                print(f"You purchased {qty_to_buy} kg of {fruit_name} for ${total_cost}.")
+                                print(f"You purchased {qty_to_buy} kg of {fruit_name} for {total_cost}.")
                             else:
                                 print(f"Sorry, we only have {fruit_stock[fruit_name]['qty']} kg of {fruit_name}.")
                         else:
