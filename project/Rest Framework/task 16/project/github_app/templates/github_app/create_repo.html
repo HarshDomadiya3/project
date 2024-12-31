@@ -1,0 +1,10 @@
+<h1>Create Repository</h1>
+{% if message %}
+    <p>{{ message }}</p>
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="repo_name">Repository Name:</label>
+    <input type="text" name="repo_name" id="repo_name" required>
+    <button type="submit">Create Repository</button>
+</form>

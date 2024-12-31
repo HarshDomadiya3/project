@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Profiles</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .doctor-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .doctor-item {
+            margin-bottom: 15px;
+        }
+        .doctor-item button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Doctor Profiles</h1>
+
+<!-- Add Doctor Profile Form -->
+<h2>Add Doctor</h2>
+<form id="addDoctorForm">
+    <input type="text" name="first_name" placeholder="First Name" required>
+    <input type="text" name="last_name" placeholder="Last Name" required>
+    <input type="text" name="specialization" placeholder="Specialization" required>
+    <input type="text" name="phone_number" placeholder="Phone Number" required>
+    <button type="submit">Add Doctor</button>
+</form>
+
+<h2>Existing Doctor Profiles</h2>
+<ul class="doctor-list" id="doctorList">
+    {% for doctor in doctors %}
+    <li id="doctor-{{ doctor.id }}" class="doctor-item">
+        <strong>{{ doctor.first_name }} {{ doctor.last_name }}</strong><br>
+        Specialization: {{ doctor.specialization }}<br>
+        Phone Number: {{ doctor.phone_number }}<br>
+
+       
+        <button class="edit-btn" data-id="{{ doctor.id }}">Edit</button>
+
+        
+        <button class="delete-btn" data-id="{{ doctor.id }}">Delete</button>
+    </li>
+    {% endfor %}
+</ul>
+
+
+<div id="editModal" style="display:none; border: 1px solid #ccc; padding: 20px;">
+    <h3>Edit Doctor Profile</h3>
+    <form id="editDoctorForm">
+        <input type="text" name="first_name" id="edit_first_name" required>
+        <input type="text" name="last_name" id="edit_last_name" required>
+        <input type="text" name="specialization" id="edit_specialization" required>
+        <input type="text" name="phone_number" id="edit_phone_number" required>
+        <input type="hidden" name="doctor_id" id="edit_doctor_id">
+        <button type="submit">Save Changes</button>
+        <button type="button" id="closeEditModal">Cancel</button>
+    </form>
+</div>
+
+<script>
+    
+    $('#addDoctorForm').submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: '{% url "add_doctor_profile" %}',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message);
+                    location.reload();  
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            }
+        });
+    });
+
+   
+    $('.delete-btn').click(function() {
+        const doctorId = $(this).data('id');
+        $.ajax({
+            url: `/profiles/delete/${doctorId}/`,
+            method: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message);
+                    $(`#doctor-${doctorId}`).remove();  
+                    alert('Error: ' + response.message);
+                }
+            }
+        });
+    });
+
+    
+    $('.edit-btn').click(function() {
+        const doctorId = $(this).data('id');
+        const doctorItem = $(`#doctor-${doctorId}`);
+        const firstName = doctorItem.find('strong').text().split(' ')[0];
+        const lastName = doctorItem.find('strong').text().split(' ')[1];
+        const specialization = doctorItem.find('br').eq(0).next().text().split(': ')[1];
+        const phoneNumber = doctorItem.find('br').eq(1).next().text().split(': ')[1];
+
+        $('#edit_first_name').val(firstName);
+        $('#edit_last_name').val(lastName);
+        $('#edit_specialization').val(specialization);
+        $('#edit_phone_number').val(phoneNumber);
+        $('#edit_doctor_id').val(doctorId);
+
+        $('#editModal').show();  
+    });
+
+    
+    $('#closeEditModal').click(function() {
+        $('#editModal').hide();  
+    });
+
+    
+    $('#editDoctorForm').submit(function(event) {
+        event.preventDefault();
+        const doctorId = $('#edit_doctor_id').val();
+        $.ajax({
+            url: `/profiles/edit/${doctorId}/`,
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message);
+                    location.reload();  
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

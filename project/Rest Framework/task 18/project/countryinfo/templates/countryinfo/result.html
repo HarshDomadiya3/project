@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Country Info</title>
+</head>
+<body>
+    <h1>Country Information</h1>
+    {% if details %}
+        <p><strong>Name:</strong> {{ details.name }}</p>
+        <p><strong>Population:</strong> {{ details.population }}</p>
+        <p><strong>Language(s):</strong> {{ details.language }}</p>
+        <p><strong>Currency:</strong> {{ details.currency }}</p>
+    {% elif error %}
+        <p>{{ error }}</p>
+    {% endif %}
+    <a href="{% url 'home' %}">Go Back</a>
+</body>
+</html>

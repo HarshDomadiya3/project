@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Country Info</title>
+</head>
+<body>
+    <h1>Find Country Information</h1>
+    <form method="post" action="{% url 'get_country_info' %}">
+        {% csrf_token %}
+        <label for="country">Enter Country Name:</label>
+        <input type="text" id="country" name="country" required>
+        <button type="submit">Get Info</button>
+    </form>
+</body>
+</html>

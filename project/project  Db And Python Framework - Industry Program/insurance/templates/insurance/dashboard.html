@@ -1,0 +1,18 @@
+{% extends 'insurance/base.html' %}
+
+{% block content %}
+    <h2>Admin Dashboard</h2>
+    <h3>Users</h3>
+    <ul>
+        {% for user in users %}
+            <li>{{ user.username }} ({{ user.email }})</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Policy Holders</h3>
+    <ul>
+        {% for holder in policy_holders %}
+            <li>{{ holder.user.username }} - {{ holder.policy_type }} - Approved: {{ holder.approved }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

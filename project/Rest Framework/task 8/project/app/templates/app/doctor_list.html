@@ -1,0 +1,34 @@
+<!-- app/templates/app/doctor_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor List</title>
+</head>
+<body>
+    <h1>Doctor List</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Specialty</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+        </tr>
+        {% for doctor in doctors %}
+        <tr>
+            <td>{{ doctor.name }}</td>
+            <td>{{ doctor.specialty }}</td>
+            <td>{{ doctor.phone_number }}</td>
+            <td>{{ doctor.email }}</td>
+            <td>{{ doctor.address }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No doctors found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

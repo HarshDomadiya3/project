@@ -1,0 +1,22 @@
+<h1>Latest Tweets</h1>
+<form method="GET">
+    <label for="username">Enter Twitter Username:</label>
+    <input type="text" name="username" id="username" required>
+    <button type="submit">Get Tweets</button>
+</form>
+
+{% if tweets %}
+    <h2>Results:</h2>
+    <ul>
+        {% for tweet in tweets %}
+            <li>
+                {% if tweet.error %}
+                    <strong>Error:</strong> {{ tweet.error }}
+                {% else %}
+                    <p>{{ tweet.text }}</p>
+                    <small>Posted on: {{ tweet.created_at }}</small>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
