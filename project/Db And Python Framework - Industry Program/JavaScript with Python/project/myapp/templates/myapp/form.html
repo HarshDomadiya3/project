@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Form Validation</title>
+    <script src="{% static 'myapp/js/validation.js' %}"></script>
+</head>
+<body>
+
+    <h2>Welcome to the Home Page!</h2>
+    <h3>Fill out the form below:</h3>
+
+    <form id="userForm" method="POST" onsubmit="return validateForm()">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <p id="error-message" style="color: red; display: none;"></p>
+
+</body>
+</html>
