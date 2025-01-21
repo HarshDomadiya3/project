@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6p0ow4wk_fd(k%0=^-^dsw(tu=q6+y1&@y9g4&7he%dwup30^h'
+SECRET_KEY = 'django-insecure-lzuu37sy5-9f7%y6)39)54m-u)(lw1&950zeaz8w!_w1p#-aeb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,14 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'web',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook'
+    'app',
 ]
+
+GOOGLE_MAPS_API_KEY = "AIzaSyDXtnl6Mxdc5kqQxCa59Ss31_UC5cW3JJ8"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -54,10 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "allauth.account.middleware.AccountMiddleware",
 ]
-
-
 
 ROOT_URLCONF = 'project.urls'
 
@@ -131,32 +125,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-SITE_ID = 1
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': "1025677770647-cp17ke2tubb89utha07fagkbtg9hvuje.apps.googleusercontent.com",
-            'secret': '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',
-            'key': ''
-        }
-    },
-    'facebook': {
-        'APP': {
-            'client_id': '3445390385767439',
-            'secret': 'e7fc3a7feea6001312106c53d481b1c5',
-            'key': ''
-        }
-    }
-}
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',   
-]
-
-LOGIN_URL = '/accounts/login/'
-LOGOUT_URL = '/accounts/logout/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'

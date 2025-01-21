@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Form</title>
+</head>
+<body>
+    <h1>{{ doctor|default:"Add New Doctor" }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value="{{ doctor.name|default:'' }}"><br>
+        <label for="specialization">Specialization:</label><br>
+        <input type="text" id="specialization" name="specialization" value="{{ doctor.specialization|default:'' }}"><br>
+        <label for="phone">Phone:</label><br>
+        <input type="text" id="phone" name="phone" value="{{ doctor.phone|default:'' }}"><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" value="{{ doctor.email|default:'' }}"><br><br>
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'doctor_list' %}">Cancel</a>
+</body>
+</html>

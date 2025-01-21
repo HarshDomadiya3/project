@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            const phonePattern = /^[0-9]{10}$/;
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            let errors = [];
+
+            if (name.trim() === '') {
+                errors.push("Name cannot be empty.");
+            }
+            if (!emailPattern.test(email)) {
+                errors.push("Invalid email format.");
+            }
+            if (!phonePattern.test(phone)) {
+                errors.push("Phone number must be 10 digits.");
+            }
+
+            const errorDiv = document.getElementById('errors');
+            errorDiv.innerHTML = '';
+
+            if (errors.length > 0) {
+                errors.forEach(error => {
+                    const errorItem = document.createElement('p');
+                    errorItem.style.color = 'red';
+                    errorItem.innerText = error;
+                    errorDiv.appendChild(errorItem);
+                });
+            } else {
+                alert("Form submitted successfully!");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Register</h1>
+    <div id="errors"></div>
+    <form id="registrationForm" onsubmit="validateForm(event)">
+        {% csrf_token %}
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="phone">Phone:</label><br>
+        <input type="text" id="phone" name="phone" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
